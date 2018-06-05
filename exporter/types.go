@@ -11,6 +11,8 @@ type Job struct {
 	Name  string `json:"name"`
 	Color string `json:"color"`
 	URL   string `json:"url"`
+	Class string `json:"_class"`
+	Jobs  []*Job `json:"jobs"`
 }
 
 // Key generates a usable map key for the job.
@@ -27,7 +29,7 @@ type Root struct {
 func (r *Root) Fetch(address, username, password string) error {
 	req, err := http.NewRequest(
 		"GET",
-		fmt.Sprintf("%s/api/json", address),
+		fmt.Sprintf("%s/api/json?depth=1", address),
 		nil,
 	)
 

@@ -95,27 +95,41 @@ func (e *Exporter) scrape() error {
 	for _, job := range root.Jobs {
 		log.Debugf("processing %s job", job.Name)
 
-		if job.Color != "" {
-			if _, ok := jobColor[job.Key()]; ok == false {
-				jobColor[job.Key()] = prometheus.NewGauge(
-					prometheus.GaugeOpts{
-						Namespace: namespace,
-						Name:      "job_color",
-						Help:      "Color code of the Jenkins job",
-						ConstLabels: prometheus.Labels{
-							"name": job.Name,
-						},
-					},
-				)
+		if job.Class == "com.cloudbees.hudson.plugins.folder.Folder" {
+			for _, folderJob := range job.Jobs {
+				e.scrapeJob(folderJob)
 			}
-
-			color := colorToGauge(job.Color)
-			log.Debugf("setting color to %f for %s", color, job.Name)
-
-			jobColor[job.Key()].Set(colorToGauge(job.Color))
+		} else {
+			e.scrapeJob(job)
 		}
 	}
 
 	isUp.Set(1)
+	return nil
+}
+
+func (e *Exporter) scrapeJob(job *Job) error {
+
+	log.Debugf("processing %s job", job.Name)
+
+	if job.Color != "" {
+		if _, ok := jobColor[job.Key()]; ok == false {
+			jobColor[job.Key()] = prometheus.NewGauge(
+				prometheus.GaugeOpts{
+					Namespace: namespace,
+					Name:      "job_color",
+					Help:      "Color code of the Jenkins job",
+					ConstLabels: prometheus.Labels{
+						"name": job.Name,
+					},
+				},
+			)
+		}
+
+		color := colorToGauge(job.Color)
+		log.Debugf("setting color to %f for %s", color, job.Name)
+
+		jobColor[job.Key()].Set(colorToGauge(job.Color))
+	}
 	return nil
 }

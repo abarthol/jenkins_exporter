@@ -6,11 +6,12 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/abarthol/jenkins_exporter/exporter"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/log"
 	"github.com/prometheus/common/version"
-	"github.com/webhippie/jenkins_exporter/exporter"
 
 	_ "net/http/pprof"
 )
@@ -50,7 +51,7 @@ func main() {
 	}
 
 	if *address == "" {
-		fmt.Fprintln(os.Stderr, "Please provide a address for Jenkins")
+		fmt.Fprintln(os.Stderr, "Please provide an address for Jenkins")
 		os.Exit(1)
 	}
 
