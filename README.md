@@ -33,7 +33,7 @@ Usage of /bin/jenkins_exporter:
 
 ## Development
 
-Make sure you have a working Go environment, for further reference or a guide take a look at the [install instructions](http://golang.org/doc/install.html). It is also possible to just simply execute the `go get github.com/webhippie/jenkins_exporter` command, but we prefer to use our `Makefile`:
+Make sure you have a working Go environment, for further reference or a guide take a look at the [install instructions](http://golang.org/doc/install.html). It is also possible to just simply execute the `go get github.com/abarthol/jenkins_exporter` command, but we prefer to use our `Makefile`:
 
 ```bash
 go get -d github.com/abarthol/jenkins_exporter
@@ -65,7 +65,7 @@ jenkins_up 1
 
 ## Authors
 
-* [Alexander Bartholomäi](https://github/abarthol)
+* [Alexander Bartholomäi](https://github.com/abarthol)
 * [Thomas Boerger](https://github.com/tboerger)
 
 
